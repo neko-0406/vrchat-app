@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import { AppProvider } from './contexts/AppContext';
+import LoginMenu from './LoginMenu';
 
 interface AppState {
   appState: 'login' | 'auth' | 'main';
@@ -12,7 +13,7 @@ function App() {
   return (
     <AppProvider>
       {appState[0] === 'login' ? (
-        <div className='login-screen'>Login Screen</div>
+        <LoginMenu />
       ) : appState[0] === 'auth' ? (
         <div className='auth-screen'>Auth Screen</div>
       ) : appState[0] === 'main' ? (
