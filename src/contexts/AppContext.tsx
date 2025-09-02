@@ -18,8 +18,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   // ここに状態管理のロジックを記述します
   // const [theme, setTheme] = useState('light');
-  const [userName, setUserName] = useState<string|undefined>(undefined);
-  const [passwd, setPasswd] = useState<string|undefined>(undefined);
+  const [userName, setUserName] = useState<string | undefined>(undefined);
+  const [passwd, setPasswd] = useState<string | undefined>(undefined);
 
   const value = {
     // theme,

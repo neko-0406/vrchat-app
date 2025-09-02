@@ -11,15 +11,13 @@ function App() {
 
   return (
     <AppProvider>
-      {
-        appState[0] === 'login' ? (
-          <div className='login-screen'>Login Screen</div>
-        ) : appState[0] === 'auth' ? (
-          <div className='auth-screen'>Auth Screen</div>
-        ) : appState[0] === 'main' ? (
-          <div className='main-screen'>Main Screen</div>
-        ) : null
-      }
+      {appState[0] === 'login' ? (
+        <div className='login-screen'>Login Screen</div>
+      ) : appState[0] === 'auth' ? (
+        <div className='auth-screen'>Auth Screen</div>
+      ) : appState[0] === 'main' ? (
+        <div className='main-screen'>Main Screen</div>
+      ) : null}
     </AppProvider>
   );
 }
