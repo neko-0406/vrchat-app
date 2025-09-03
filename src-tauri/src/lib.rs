@@ -1,5 +1,4 @@
 mod vrchatapi;
-mod app_state;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
