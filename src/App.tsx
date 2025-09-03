@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import './App.css';
+import './styles/App.css';
 import { AppProvider } from './contexts/AppContext';
-import LoginMenu from './LoginMenu';
+import LoginMenu from './pages/LoginMenu';
 
 interface AppState {
   appState: 'login' | 'auth' | 'main';
