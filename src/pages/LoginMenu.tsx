@@ -2,17 +2,8 @@ import { login } from '../api/vrchat';
 import { useAppContext } from '../contexts/AppContext';
 
 export default function LoginMenu() {
-  const {
-    username,
-    setUsername,
-    password,
-    setPassword,
-    isLoading,
-    setIsLoading,
-    error,
-    setError,
-    setIsLoggedIn,
-  } = useAppContext();
+  const { username, setUsername, password, setPassword, isLoading, setIsLoading, error, setError, setIsLoggedIn } =
+    useAppContext();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

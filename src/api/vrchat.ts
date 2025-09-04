@@ -1,17 +1,26 @@
-import { fetch } from "@tauri-apps/plugin-http";
+import { fetch } from '@tauri-apps/plugin-http';
 
-export const BASE_URL = "https://api.vrchat.cloud/api/1";
+export const BASE_URL = 'https://api.vrchat.cloud/api/1';
 
 export async function login(username: string, password: string) {
   const pUserName = encodeURI(username);
   const pPassword = encodeURI(password);
-  const result = await fetch(BASE_URL + "/auth/user", {
+  const encodedString = Base64(`${pUserName}:${pPassword}`);
+  const result = await fetch(BASE_URL + '/auth/user', {
     headers: {
-      "Authorization": Base64(`${pUserName}:${pPassword}`)
-    }
-  })
+      Authorization: `Basic ${encodedString}`,
+    },
+  });
 
-  console.log(result);
+  console.log(await result.json());
+}
+
+export async function sendAuthCode(authCode: string) {
+  const result = await fetch(BASE_URL + '/auth/user/twofactorauth/totp', {
+    headers: {
+      cookie: `auth=${authCode}`,
+    },
+  });
 }
 
 // Base64エンコードする関数
