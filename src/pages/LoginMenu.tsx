@@ -1,13 +1,36 @@
-import { useState } from 'react';
+import { login } from '../api/vrchat';
+import { useAppContext } from '../contexts/AppContext';
 
 export default function LoginMenu() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    isLoading,
+    setIsLoading,
+    error,
+    setError,
+    setIsLoggedIn,
+    setCurrentUser,
+  } = useAppContext();
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // TODO: ログイン処理を実装
-    console.log('Login attempt with:', { username, password });
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const currentUser = await login(username, password);
+      setCurrentUser(currentUser);
+      setIsLoggedIn(true);
+      console.log('Login successful:', currentUser);
+    } catch (err: any) {
+      setError(err.message || 'An unknown error occurred.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -15,9 +38,17 @@ export default function LoginMenu() {
       <div className='login-container'>
         <h2>VRChatにログイン</h2>
         <form onSubmit={handleSubmit}>
+          {error && <div className='error-message'>{error}</div>}
           <div className='input-group'>
             <label htmlFor='username'>ユーザー名</label>
-            <input type='text' id='username' value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <input
+              type='text'
+              id='username'
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              disabled={isLoading}
+            />
           </div>
           <div className='input-group'>
             <label htmlFor='password'>パスワード</label>
@@ -27,10 +58,11 @@ export default function LoginMenu() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={isLoading}
             />
           </div>
-          <button type='submit' className='login-button'>
-            ログイン
+          <button type='submit' className='login-button' disabled={isLoading}>
+            {isLoading ? 'ログイン中...' : 'ログイン'}
           </button>
         </form>
       </div>
