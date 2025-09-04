@@ -12,7 +12,7 @@ export async function login(username: string, password: string) {
     },
   });
 
-  console.log(await result.json());
+  return await result.json();
 }
 
 export async function sendAuthCode(authCode: string) {
@@ -21,6 +21,8 @@ export async function sendAuthCode(authCode: string) {
       cookie: `auth=${authCode}`,
     },
   });
+
+  return await result.json()
 }
 
 // Base64エンコードする関数
