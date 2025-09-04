@@ -16,7 +16,7 @@ export async function login(username: string, password: string) {
 }
 
 export async function sendAuthCode(authCode: string) {
-  const result = await fetch(BASE_URL + '/auth/user/twofactorauth/totp', {
+  const result = await fetch(BASE_URL + '/auth/user/twofactorauth/totp/verify', {
     headers: {
       cookie: `auth=${authCode}`,
     },
