@@ -10,8 +10,11 @@ export async function login(username: string, password: string) {
       "Authorization": Base64(`${pUserName}:${pPassword}`)
     }
   })
+
+  console.log(result);
 }
 
+// Base64エンコードする関数
 function Base64(str: string) {
   const encoder = new TextEncoder();
   const data: Uint8Array = encoder.encode(str);
