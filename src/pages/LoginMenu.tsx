@@ -12,7 +12,6 @@ export default function LoginMenu() {
     error,
     setError,
     setIsLoggedIn,
-    setCurrentUser,
   } = useAppContext();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -22,7 +21,6 @@ export default function LoginMenu() {
 
     try {
       const currentUser = await login(username, password);
-      setCurrentUser(currentUser);
       setIsLoggedIn(true);
       console.log('Login successful:', currentUser);
     } catch (err: any) {

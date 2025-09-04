@@ -1,5 +1,4 @@
 import { createContext, useContext, ReactNode, useState } from 'react';
-import { User } from 'vrchat';
 
 // Contextで共有する値の型定義
 interface AppContextType {
@@ -13,8 +12,6 @@ interface AppContextType {
   setIsLoading: (isLoading: boolean) => void;
   error: string | null;
   setError: (error: string | null) => void;
-  currentUser: User | null;
-  setCurrentUser: (user: User | null) => void;
 }
 
 // Contextの作成
@@ -27,7 +24,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const value = {
     username,
@@ -40,8 +36,6 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading,
     error,
     setError,
-    currentUser,
-    setCurrentUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
