@@ -11,7 +11,9 @@
     "http:default",
     {
       "identifier": "http:default",
-      "allow": [{ "url": "https://https://api.vrchat.cloud/api/1/auth/user" }]
+      "allow": [
+        "https://api.vrchat.cloud/api/1/*"
+      ]
     }
   ]
 }
