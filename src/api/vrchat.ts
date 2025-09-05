@@ -7,11 +7,11 @@ export async function login(username: string, password: string) {
   const pPassword = encodeURI(password);
   const encodedString = Base64(`${pUserName}:${pPassword}`);
   const result = await fetch(BASE_URL + '/auth/user', {
+    method: "GET",
     headers: {
       Authorization: `Basic ${encodedString}`,
     },
   });
-
   return await result.json();
 }
 
