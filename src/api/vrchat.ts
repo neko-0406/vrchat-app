@@ -15,13 +15,18 @@ export async function login(username: string, password: string) {
   return await result.json();
 }
 
-export async function sendAuthCode(authCode: string) {
-  const result = await fetch(BASE_URL + '/auth/user/twofactorauth/totp/verify', {
+export async function verifyTwoFactorAuth(authCode: string) {
+  const body = JSON.stringify({"code": `string`})
+  const result = await fetch(BASE_URL + '/auth/twofactorauth/totp/verify', {
+    method: "POST",
     headers: {
       cookie: `auth=${authCode}`,
     },
+    body
   });
 
+  const a = await result.clone().json()
+  console.log(a)
   return await result.json()
 }
 
