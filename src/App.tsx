@@ -1,24 +1,27 @@
-import { useState } from 'react';
 import './styles/App.css';
-import { AppProvider } from './contexts/AppContext';
+import { AppProvider, useAppContext } from './contexts/AppContext';
 import LoginMenu from './pages/LoginMenu';
+import { TwoFactorAuth } from './pages/TwoFactorAuth';
+import MainContent from './pages/MainContent';
 
-interface AppState {
-  appState: 'login' | 'auth' | 'main';
+function AppContent() {
+  const { isLoggedIn, requires2FA } = useAppContext();
+
+  if (isLoggedIn) {
+    return <MainContent />;
+  }
+
+  if (requires2FA) {
+    return <TwoFactorAuth />;
+  }
+
+  return <LoginMenu />;
 }
 
 function App() {
-  const appState = useState<AppState['appState']>('login');
-
   return (
     <AppProvider>
-      {appState[0] === 'login' ? (
-        <LoginMenu />
-      ) : appState[0] === 'auth' ? (
-        <div className='auth-screen'>Auth Screen</div>
-      ) : appState[0] === 'main' ? (
-        <div className='main-screen'>Main Screen</div>
-      ) : null}
+      <AppContent />
     </AppProvider>
   );
 }

@@ -2,8 +2,18 @@ import { login } from '../api/vrchat';
 import { useAppContext } from '../contexts/AppContext';
 
 export default function LoginMenu() {
-  const { username, setUsername, password, setPassword, isLoading, setIsLoading, error, setError, setIsLoggedIn } =
-    useAppContext();
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    isLoading,
+    setIsLoading,
+    error,
+    setError,
+    setIsLoggedIn,
+    setRequires2FA,
+  } = useAppContext();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -11,9 +21,16 @@ export default function LoginMenu() {
     setError(null);
 
     try {
-      const currentUser = await login(username, password);
-      setIsLoggedIn(true);
-      console.log('Login successful:', currentUser);
+      const result = await login(username, password);
+
+      if (result.requiresTwoFactorAuth) {
+        setRequires2FA(true);
+      } else if (result.id) {
+        setIsLoggedIn(true);
+        console.log('Login successful:', result);
+      } else {
+        throw new Error(result.error?.message || 'Login failed');
+      }
     } catch (err: any) {
       setError(err.message || 'An unknown error occurred.');
       console.error(err);

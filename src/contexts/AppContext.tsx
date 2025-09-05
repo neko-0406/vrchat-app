@@ -12,6 +12,8 @@ interface AppContextType {
   setIsLoading: (isLoading: boolean) => void;
   error: string | null;
   setError: (error: string | null) => void;
+  requires2FA: boolean;
+  setRequires2FA: (requires2FA: boolean) => void;
 }
 
 // Contextの作成
@@ -24,6 +26,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [requires2FA, setRequires2FA] = useState(false);
 
   const value = {
     username,
@@ -36,6 +39,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading,
     error,
     setError,
+    requires2FA,
+    setRequires2FA,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
