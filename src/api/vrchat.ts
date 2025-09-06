@@ -9,25 +9,33 @@ export async function login(username: string, password: string) {
   const result = await fetch(BASE_URL + '/auth/user', {
     method: "GET",
     headers: {
-      Authorization: `Basic ${encodedString}`,
+      "Content-Type": "application/json",
+      "Authorization": `Basic ${encodedString}`,
     },
+    credentials: 'include'
   });
-  return await result.json();
+
+  const setCookie = result.headers.get("set-cookie") || "";
+  console.log("cookie:", setCookie)
+  const obj = await result.json();
+  console.log(obj);
+  return obj;
 }
 
 export async function verifyTwoFactorAuth(authCode: string) {
-  const body = JSON.stringify({"code": `string`})
+  const body = JSON.stringify({"code": `${authCode}`})
   const result = await fetch(BASE_URL + '/auth/twofactorauth/totp/verify', {
     method: "POST",
     headers: {
-      cookie: `auth=${authCode}`,
+      "Content-Type": "application/json",
+      "cookie": `auth=`,
     },
     body
   });
 
-  const a = await result.clone().json()
-  console.log(a)
-  return await result.json()
+  const obj = await result.json()
+  console.log(obj)
+  return obj
 }
 
 // Base64エンコードする関数
